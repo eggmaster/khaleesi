@@ -2,4 +2,4 @@
   - name: answer-file neutron all-in-one config 
     lineinfile: dest={{ packstack_config }} regexp='{{ item.option }}=.*' line='{{ item.option }}={{ item.value }}'
     with_items:
-      aio_config_options
+      rdopkg_config_options
