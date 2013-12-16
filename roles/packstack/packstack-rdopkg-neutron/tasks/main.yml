@@ -3,3 +3,6 @@
     lineinfile: dest={{ packstack_config }} regexp='{{ item.option }}=.*' line='{{ item.option }}={{ item.value }}'
     with_items:
       rdopkg_config_options
+
+  - name: yum install koji
+    yum: name=http://dl.fedoraproject.org/pub/epel/6/x86_64/koji-1.8.0-2.el6.noarch.rpm state=present
