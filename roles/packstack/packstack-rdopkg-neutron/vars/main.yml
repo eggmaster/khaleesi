@@ -1,7 +1,7 @@
 ---
 packstack_config: /root/packstack_config.txt
 
-aio_config_options:
+rdopkg_config_options:
       - { option: 'CONFIG_USE_EPEL', value: 'y' }
       - { option: 'CONFIG_NOVA_NETWORK_FIXEDRANGE', value: '192.168.32.0/24' }
       - { option: 'CONFIG_NOVA_NETWORK_FLOATRANGE', value: '10.3.4.0/24'}
