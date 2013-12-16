@@ -15,3 +15,5 @@ rdopkg_config_options:
       - { option: 'CONFIG_NOVA_COMPUTE_PRIVIF', value: 'eth0'}
       - { option: 'CONFIG_NOVA_NETWORK_PRIVIF', value: 'eth0'}
       - { option: 'CONFIG_PROVISION_DEMO', value: 'n'}
+
+rdopkg_rpm_dir: /tmp/rdopkg/rpms
