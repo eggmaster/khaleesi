@@ -18,3 +18,7 @@
     when: rdopkg_nvrs is defined
     with_items:
       rdopkg_nvrs
+
+  - name: rpm force install rdopkg RPMs
+    command: rpm -i --force --nodeps {{ rdopkg_rpm_dir }}/*.rpm
+    when: rdopkg_nvrs is defined
