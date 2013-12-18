@@ -1,0 +1,19 @@
+---
+  - name: yum install koji
+    yum: name=http://dl.fedoraproject.org/pub/epel/6/x86_64/koji-1.8.0-2.el6.noarch.rpm state=present
+
+  - name: rdopkg directory present
+    file: path={{ rdopkg_rpm_dir }} owner=root group=root state=directory
+
+  - name: clear rdopkg directory
+    command: rm -Rf {{ rdopkg_rpm_dir }}/*
+
+  - name: koji download rdopkg RPMs
+    command: koji download-build {{ item.nvr }} chdir={{ rdopkg_rpm_dir }}
+    when: rdopkg_nvrs is defined
+    with_items:
+      rdopkg_nvrs
+
+  - name: rpm force install rdopkg RPMs
+    command: rpm -i --force --nodeps {{ rdopkg_rpm_dir }}/*.rpm
+    when: rdopkg_nvrs is defined

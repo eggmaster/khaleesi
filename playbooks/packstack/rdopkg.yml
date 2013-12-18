@@ -23,4 +23,4 @@
     - { role: packstack/rdo }
     - { role: packstack/packstack-rdopkg-neutron }
     - { role: packstack/packstack-installer }
-
+    - { role: rdopkg/update }
