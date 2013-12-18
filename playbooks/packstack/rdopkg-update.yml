@@ -1,0 +1,12 @@
+---
+- name: Get nodes from nova
+  hosts: local
+  gather_facts: False
+  roles:
+    - { role: get_nodes }
+
+- name: packstack
+  hosts: packstack
+  user: root
+  roles:
+    - { role: rdopkg/update }
