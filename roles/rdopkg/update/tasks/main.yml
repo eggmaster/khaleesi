@@ -17,3 +17,9 @@
   - name: rpm force install rdopkg RPMs
     command: rpm -i --force --nodeps {{ rdopkg_rpm_dir }}/*.rpm
     when: rdopkg_nvrs is defined
+
+  - name: restart openstack and neutron services
+    service: name={{ item }} state=restarted
+    when: rdopkg_nvrs is defined
+    with_items:
+      services_list
