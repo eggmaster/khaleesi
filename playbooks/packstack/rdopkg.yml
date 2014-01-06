@@ -15,6 +15,8 @@
 
 - name: packstack
   hosts: packstack
+  vars:
+    controller_name: {{ ansible_ssh_host }}
   user: root
   roles:
     - { role: common }
@@ -23,5 +25,6 @@
     - { role: packstack/rdo }
     - { role: packstack/packstack-rdopkg-neutron }
     - { role: packstack/packstack-installer }
+    - { role: openstack/create_keystonerc }
     - { role: tempest }
 
