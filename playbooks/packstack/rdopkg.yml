@@ -16,7 +16,7 @@
 - name: packstack
   hosts: packstack
   vars:
-    controller_name: {{ ansible_ssh_host }}
+    controller_name: "{{ ansible_ssh_host }}"
   user: root
   roles:
     - { role: common }
