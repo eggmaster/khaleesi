@@ -25,6 +25,6 @@
     - { role: packstack/rdo }
     - { role: packstack/packstack-rdopkg-neutron }
     - { role: packstack/packstack-installer }
-    - { role: openstack/create_keystonerc }
+    - { role: openstack/create-keystonerc }
     - { role: tempest }
 
