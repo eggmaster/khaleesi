@@ -27,4 +27,4 @@
     - { role: packstack/packstack-rdopkg-neutron }
     - { role: packstack/packstack-installer }
     - { role: openstack/create-keystonerc, controller_fqdn: controller_name }
-    - { role: tempest }
+    - { role: tempest, controller_fqdn: controller_name }
