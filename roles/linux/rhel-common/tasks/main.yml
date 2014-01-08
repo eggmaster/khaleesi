@@ -19,6 +19,10 @@
 - name: Ensure httplib2
   yum: name=python-httplib2 state=present
 
+- name: be sure openssl-devel is installed
+  yum: name=openssl-devel state=installed
+  tags: openssl-devel
+
 #WORKAROUND
 - name: Ensure /etc/sysconfig/iptables-services
   copy: src=iptables dest=/etc/sysconfig/iptables owner=root group=root mode=0600 force=no

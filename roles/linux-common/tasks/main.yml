@@ -1,8 +1,4 @@
 ---
-- name: be sure openssl-devel is installed
-  yum: name=openssl-devel state=installed
-  tags: openssl-devel
-
 - name: be sure ntp is installed
   yum: name=ntp state=installed
   tags: ntp
