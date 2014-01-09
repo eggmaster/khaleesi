@@ -1,6 +1,6 @@
 ---
 - name: Remove yum-rhn-plugin
-  yum: name=yum-rhn-plugin state=absent
+  command: rpm -e yum-rhn-plugin rhn-check --nodeps
 
 - name: Ensure libselinux-python
   yum: name=libselinux-python state=present
