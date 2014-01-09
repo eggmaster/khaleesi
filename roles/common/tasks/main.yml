@@ -1,9 +1,9 @@
 ---
-- name: Ensure libselinux-python
-  yum: name=libselinux-python state=present
-
 - name: Remove yum-rhn-plugin
   yum: name=yum-rhn-plugin state=absent
+
+- name: Ensure libselinux-python
+  yum: name=libselinux-python state=present
 
 - name: Yum clean all
   command: yum clean all
