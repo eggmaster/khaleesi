@@ -40,7 +40,6 @@
   user: root
   roles:
     - { role: packstack/packstack-installer }
-    - { role: openstack/create-keystonerc, controller_fqdn: "{{ controller_name }}" }
   tags:
     - install
 
@@ -51,6 +50,7 @@
     controller_fqdn: "{{ ansible_ssh_host }}"
   user: root
   roles:
+    - { role: openstack/create-keystonerc, controller_fqdn: "{{ controller_name }}" }
     - { role: tempest, controller_fqdn: "{{ controller_name }}" }
   tags:
     - tempest
