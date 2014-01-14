@@ -37,7 +37,7 @@ tempest.nose_test() {
 
     nosetests --verbose --attr=type=smoke  --with-xunit \
         ${nose_exclude_files[@]} ${nose_exclude_tests[@]} \
-        tempest.scenario.test_network_basic_ops || true
+        tempest || true
     return 0
 }
 
@@ -87,7 +87,7 @@ tempest.testr() {
 
 tempest.run_smoketest() {
     local tempest_dir=$1; shift
-    local tempest_test_name=${1:-""}
+    local tempest_test_name=${1:-""}; shift
 
     if [[ $1 != '--exclude-files' ]]; then
         usage
