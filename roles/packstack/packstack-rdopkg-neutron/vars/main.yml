@@ -14,4 +14,5 @@ rdopkg_config_options:
       - { option: 'CONFIG_PROVISION_ALL_IN_ONE_OVS_BRIDGE', value: 'y'}
       - { option: 'CONFIG_NOVA_COMPUTE_PRIVIF', value: 'eth0'}
       - { option: 'CONFIG_NOVA_NETWORK_PRIVIF', value: 'eth0'}
-      - { option: 'CONFIG_PROVISION_DEMO', value: 'n'}
+      - { option: 'CONFIG_PROVISION_DEMO', value: 'y'}
+      - { option: 'CONFIG_PROVISION_TEMPEST', value: 'y'}
