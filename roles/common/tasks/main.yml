@@ -4,7 +4,7 @@
   ignore_errors: yes
 
 - name: Ensure libselinux-python
-  yum: name=libselinux-python state=present
+  command: rpm -q libselinux-python
 
 - name: Yum clean all
   command: yum clean all
