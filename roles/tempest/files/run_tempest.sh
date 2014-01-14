@@ -37,7 +37,7 @@ tempest.nose_test() {
 
     nosetests --verbose --attr=type=smoke  --with-xunit \
         ${nose_exclude_files[@]} ${nose_exclude_tests[@]} \
-        tempest.api.identity.admin.test_services || true
+        tempest.scenario.test_network_basic_ops || true
     return 0
 }
 
