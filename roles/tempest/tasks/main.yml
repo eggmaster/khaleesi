@@ -9,7 +9,7 @@
 - { include: setup-tempest.yml }
 
 - name: Run tempest
-  script: run_tempest.sh {{ tempest['checkout_dir'] }}
+  script: run_tempest.sh {{ tempest['checkout_dir'] }} "{{ tempest_test_name }}"
        --exclude-files {{ tempest['exclude']['files'] }}
        --exclude-tests {{ tempest['exclude']['tests'] }}
 
