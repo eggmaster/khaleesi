@@ -19,6 +19,7 @@ main() {
     local baseurl=${REPO_BASEURL:-$rdo_icehouse_f20_baseurl}
     local image_id=${IMAGE_ID:-'CHANGE_ME'}
     local net_1=${NET_1:-'CHANGE_ME'}
+    local net_2=${NET_2:-'CHANGE_ME'}
 
     local tags=${TAGS:-''}
     local tempest_tests=${TEMPEST_TEST_NAME:-'tempest'}
@@ -36,6 +37,7 @@ config:
   verbosity:
     - info
     - warning
+    - debug
 
 # OpenStack controller settings
 os_auth_url: '$OS_AUTH_URL'
@@ -45,7 +47,7 @@ os_tenant_name: $OS_TENANT_NAME
 
 # instance settings
 node_prefix: $node_prefix
-network_ids: [{ net-id: '$net_1' }]
+network_ids: [{ net-id: '$net_1' }, { net-id: '$net_2' } ]
 image_id: $image_id
 ssh_private_key: $key_file
 ssh_key_name: $key_name
@@ -60,6 +62,7 @@ nodes:
     network_ids: "{{ network_ids }}"
     hostname: packstack.example.com
     groups: "packstack,openstack_nodes"
+    packstack_node_hostgroup: packstack
 
 #VM settings
 epel_repo: download.fedoraproject.org/pub/epel/6/
