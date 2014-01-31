@@ -1,14 +1,4 @@
 ---
-- name: check user
-  hosts: controller
-  tasks:
-    - name: whoami
-      command: whoami
-      su: yes
-      su_user: root
-      register: result
-      tags: setup-keys
-
 - name: Create ssh key if one does not exist
   hosts: controller
   tasks:

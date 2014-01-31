@@ -3,11 +3,11 @@
   yum: name=rdo-release* state=absent
   ignore_errors: yes
 
-- name: yum install rdo-release
-  yum: name="{{ rdo[ config.version ].release_rpm[ ansible_distribution ] }}" state=present     #"
-
 - debug: var=rdo
   when: "'debug' in config.verbosity"
+
+- name: yum install rdo-release
+  yum: name="{{ rdo[ config.version ].release_rpm[ ansible_distribution ] }}" state=present     #"
 
 - debug: msg="Setting baseurl to {{ rdo[config.version][config.repo].repo[ansible_distribution] }}"         #"
   when: "'info' in config.verbosity"

@@ -7,6 +7,7 @@
   tags:
     - tempest_setup
 
+- { include: ../../openstack/create-keystonerc/tasks/main.yml tags=tempest_setup }
 - { include: setup-openstack-elements.yml  tags=tempest_setup }
 - { include: setup-tempest.yml tags=tempest_setup }
 

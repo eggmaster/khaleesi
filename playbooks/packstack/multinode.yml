@@ -53,7 +53,6 @@
   vars:
     controller_name: "{{ ansible_ssh_host }}"
     controller_fqdn: "{{ ansible_ssh_host }}"
-  user: root
   roles:
     - { role: tempest, controller_fqdn: "{{ controller_name }}"}
 

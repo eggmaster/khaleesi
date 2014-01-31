@@ -2,12 +2,12 @@
 - debug: var=packstack_config
   when: "'debug' in config.verbosity"
 
-- name: change all passwords to "redhat"
+- name: update packstack answer file
   command:
     sed
-        -e 's|CONFIG_NOVA_NETWORK_PUBIF=.*|CONFIG_NOVA_NETWORK_PUBIF={{ ansible_default_ipv4.interface }}|'
+        -e 's|CONFIG_NOVA_NETWORK_PUBIF=.*|CONFIG_NOVA_NETWORK_PUBIF={{ hostvars['controller'].ansible_eth0.ipv4.address }}|'
         -e 's|_PRIVIF=.*|_PRIVIF=eth1|'
-        -e "s|CONFIG_NOVA_COMPUTE_HOSTS=.*|CONFIG_NOVA_COMPUTE_HOSTS={{ hostvars['compute'].ansible_default_ipv4.address }}|"
+        -e 's|CONFIG_NOVA_COMPUTE_HOSTS=.*|CONFIG_NOVA_COMPUTE_HOSTS={{ hostvars['compute'].ansible_eth0.ipv4.address }}|'
         -e 's|CONFIG_NEUTRON_OVS_TENANT_NETWORK_TYPE=.*|CONFIG_NEUTRON_OVS_TENANT_NETWORK_TYPE=gre|'
         -e 's|CONFIG_NEUTRON_OVS_VLAN_RANGES=.*|CONFIG_NEUTRON_OVS_VLAN_RANGES=phynet1|'
         -e 's|CONFIG_NEUTRON_OVS_TUNNEL_RANGES=.*|CONFIG_NEUTRON_OVS_TUNNEL_RANGES=1:1000|'

@@ -15,4 +15,14 @@
     - { role: set_facts }
     - { role: wait_for_hosts }
 
-
+- name: Prepare network for Packstack install
+  hosts:
+    - controller
+    - compute
+  user: "{{ remote_user }}"
+  sudo: yes
+  roles:
+    - { role: common }
+    - { role: packstack/packstack-network-setup }
+  tags:
+    - provision

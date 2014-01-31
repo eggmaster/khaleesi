@@ -20,7 +20,7 @@
       - { role: linux/centos, tags: bootstrap }
 
 - name: Bootstrap | run RHEL specific tasks
-  hosts: RHEL
+  hosts: RedHat
   roles:
       - { role: linux/rhel, tags: bootstrap }
 
