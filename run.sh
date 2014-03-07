@@ -43,6 +43,7 @@ if [[ ! -z $tags ]]; then
   # Remove extraneous '--tags' first. Jobs that use this should switch to just
   # providing the tags
   tags=${tags#--tags=}
+  tags=${tags#--tags}
   cmdline="$cmdline --tags $tags"
 fi
 
