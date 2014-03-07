@@ -26,6 +26,7 @@ main() {
     local key_name=${SSH_KEY_NAME:-'key'}
     chmod 600 $key_file
 
+    local job_name=${JOB_NAME}
     local node_prefix=${NODE_PREFIX:-st}
     local flavor_id=${FLAVOR_ID:-$default_flavor_id}
     local floating_nw_name=${FLOATING_NETWORK_NAME:-'external'}
@@ -91,6 +92,7 @@ os_password: $OS_PASSWORD
 os_tenant_name: $OS_TENANT_NAME
 
 # instance settings
+job_name: $job_name
 node_prefix: $node_prefix
 network_ids: $net_ids
 net_2_name: $net_2_name
