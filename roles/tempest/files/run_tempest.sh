@@ -90,31 +90,7 @@ tempest.testr_single() {
     local tempest_test_name=${1:-""}
 
     testr init
-    testr run --subunit $tempest_test_name |
-        tee >( subunit2junitxml --output-to=nosetests.xml ) |
-        subunit-2to1 | tee run.log |
-        tools/colorizer.py
-    return 0
-}
-
-tempest.tox() {
-    echo "Running tox ... "
-    local skip_list=${!1:-}
-    skip_list+=" "${!2:-}
-    echo "Skipping tests: $skip_list"
-
-    local is_empty=$(tr -d [[:blank:]] <<< $skip_list)
-    if [[ -z $is_empty ]] ; then
-        prevent_empty_list="####---prevent skip grep options to be empty-- it will match everything and skip all otherwise---###"
-    fi
-
-    local grep_skip_options="\\("$(sed -e 's|\ |\\\||g' <<< $skip_list)"\\)"
-    local include_list="smoke"
-
-    tox -- --parallel --subunit \
-              --load-list=<(testr list-tests $include_list |\
-                          tail -n +5 |\
-                          grep -v "$prevent_empty_list$grep_skip_options") |
+    testr run $tempest_test_name |
         tee >( subunit2junitxml --output-to=nosetests.xml ) |
         subunit-2to1 | tee run.log |
         tools/colorizer.py
@@ -156,11 +132,11 @@ tempest.run_smoketest() {
     if [[ $py_version =~ "2.6" &&  -z $tempest_test_name ]]; then
         tempest.nose_test  exclude_files[@] exclude_tests[@]
     elif [[ $py_version =~ "2.7" &&  -z $tempest_test_name ]]; then
-        tempest.tox  exclude_files[@] exclude_tests[@]
+        tempest.nose_test  exclude_files[@] exclude_tests[@]
     elif [[ $py_version =~ "2.6" &&  -n $tempest_test_name ]]; then
         tempest.nose_test_single $tempest_test_name
     elif [[ $py_version =~ "2.7" &&  -n $tempest_test_name ]]; then
-        tempest.testr_single $tempest_test_name
+        tempest.nose_test_single $tempest_test_name
     else
         echo "Please check test variables"
         return 1
