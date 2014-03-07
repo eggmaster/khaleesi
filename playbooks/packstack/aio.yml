@@ -111,12 +111,6 @@
   roles:
     - { role: rdopkg/update, tags: ["rdoupdate"] }
 
-- name: Get Status 
-  hosts: controller
-  roles:
-    - { role: openstack/openstack-status }
-
-
 - name: Run tempest
   hosts: tempest
   vars:

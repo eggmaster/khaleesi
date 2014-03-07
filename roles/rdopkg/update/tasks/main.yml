@@ -22,6 +22,8 @@
     notify:
       - Yum clean all
 
+  - { include: ../../../openstack/openstack-status/tasks/main.yml }
+
   # Only update packages from the rdopkg update_rpms repo.
   - name: Install updates from rdopkg repo
     command: yum -y update
@@ -30,3 +32,6 @@
       - Wait for host to stop
       - Wait for host to come back
       - Reload facts
+
+  - { include: ../../../openstack/openstack-status/tasks/main.yml }
+
