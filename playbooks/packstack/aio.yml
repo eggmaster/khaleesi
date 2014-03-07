@@ -103,13 +103,6 @@
   tags:
     - run-packstack
 
-- name: Get Status after reboot
-  hosts: controller
-  roles:
-    - { role: openstack/openstack-status }
-  tags:
-    - run-packstack
-
   # apply post-packstack workarouds
 - include: ../../workarounds/icehouse/workarounds-post-run-packstack.yml tags=workaround-post-install
 
@@ -117,6 +110,12 @@
   hosts: packstack
   roles:
     - { role: rdopkg/update, tags: ["rdoupdate"] }
+
+- name: Get Status 
+  hosts: controller
+  roles:
+    - { role: openstack/openstack-status }
+
 
 - name: Run tempest
   hosts: tempest
