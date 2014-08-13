@@ -19,6 +19,8 @@
         value: "{{ swift_operator_role }}" }
     - { section: identity, option: uri_v3,
         value: "http://{{ hostvars[controller_name].ansible_default_ipv4.address }}:5000/v3"}
+    - { section: compute, option: flavor_ref,
+        value: "{{ tempest.instance_size | default('1') }}"}
 
 - name: Set additional arbitrary things in tempest.conf, when required
   ini_file: dest={{ tempest.checkout_dir }}/etc/tempest.conf
