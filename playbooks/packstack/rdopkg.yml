@@ -99,6 +99,13 @@
     - { role: rdopkg/prep, tags: ["rdoupdate"] }
     - { role: rdopkg/postinstall, tags: ["rdoupdate"] }
 
+- name: Get Status after reboot
+  hosts: controller
+  roles:
+    - { role: openstack/openstack-status }
+  tags:
+    - tempest_run
+
 - include: tempest.yml
 
 - name: SELINUX error check
