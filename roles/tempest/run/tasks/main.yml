@@ -3,12 +3,6 @@
   file: path={{ tempest.checkout_dir }}/.testrepository state=absent
   tags: tempest_run
 
-- name: Get Status before running tempest
-  hosts: controller
-  roles:
-    - { role: openstack/openstack-status }
-  tags: tempest_run
-
 - name: Run tempest
   script: run_tempest.sh {{ tempest.checkout_dir }} {{ tempest.test_name }}
        --exclude-files {{ tempest.exclude.files }}
