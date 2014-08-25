@@ -5,6 +5,7 @@
 - include: group_by.yml tags=provision
 
 - name: Prepare network for Packstack install
+  sudo: yes
   hosts:
     - controller
     - compute
@@ -22,21 +23,22 @@
     - { role: packstack/debug }
 
 # prep
-
 - include: packstack/setup-ssh-keys.yml tags=prep
 - include: prep.yml
 
 # apply pre-packstack workarouds
 - include: ../workarounds/workarounds-prep.yml tags=workaround
 
-- name: Setup packstack on Controller
+- name: Setup packstack on Controller (rdo)
   hosts: controller:&rdo
+  sudo: yes
   roles:
       - product/rdo
   tags: prep
 
-- name: Setup packstack on Controller
+- name: Setup packstack on Controller (rhos)
   hosts: controller:&rhos
+  sudo: yes
   roles:
       - product/rhos
   tags: prep
@@ -44,12 +46,14 @@
 # Generate answers
 - name: Setup packstack on Controller
   hosts: controller
+  sudo: yes
   roles:
       - packstack/generate-answers
   tags: prep
 
 - name: Update RPMs (rdopkg)
   hosts: controller
+  sudo: yes
   roles:
     - { role: rdopkg/prep, tags: ["rdoupdate-preinstall"] }
     - { role: rdopkg/preinstall, tags: ["rdoupdate-preinstall"] }
@@ -60,6 +64,7 @@
 
 - name: Run packstack
   hosts: controller
+  sudo: yes
   roles:
     - { role: packstack/runner }
   tags: packstack_run
@@ -68,25 +73,32 @@
 
 - name: Update RPMs
   hosts: controller
+  sudo: yes
   roles:
     - { role: rdopkg/prep, tags: ["rdoupdate"] }
     - { role: rdopkg/postinstall, tags: ["rdoupdate"] }
 
 - name: Get Status after reboot
   hosts: controller
+  sudo: yes
   tags: packstack-run
   roles:
     - { role: openstack/openstack-status }
 
+# sahara
+- include: sahara.yml
+
 # tempest
 - name: List ip address of tempest node
   hosts: tempest
+  sudo: yes
   roles:
     - { role: tempest/iptables/node_data }
   tags: tempest_setup
 
 - name: Ensure iptables is open for tempest
   hosts: all:!localhost:!tempest
+  sudo: yes
   roles:
     - { role: tempest/iptables }
   tags: tempest_setup
@@ -95,6 +107,15 @@
 
 - name: SELINUX error check
   hosts: all:!localhost:!tempest
+  sudo: yes
   roles:
     - { role: selinux_check }
   tags: provision
+
+- name: RHOS SELINUX error check
+  hosts: all:!localhost:!tempest:&rhos
+  sudo: yes
+  roles:
+    - { role: selinux_check/rhos }
+  tags: provision
+
