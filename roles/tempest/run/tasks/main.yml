@@ -3,6 +3,9 @@
   file: path={{ tempest.dir }}/.testrepository state=absent
   tags: tempest_run
 
+- name: pause before running tempest
+  pause: minutes=2
+
 - name: Run tempest
   script: run_tempest.sh {{ tempest.dir }} {{ tempest.test_name }}
        --exclude-files {{ tempest.skip.files }}
