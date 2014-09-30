@@ -7,6 +7,9 @@ Associated Settings Repository
 -----------------------
 https://github.com/redhat-openstack/khaleesi-settings
 
+Basic Cookbook Instructions
+-----------------------
+https://github.com/redhat-openstack/khaleesi-settings/blob/master/doc/khaleesi.rst
 
 Code Review (IMPORTANT)
 -----------------------
