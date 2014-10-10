@@ -7,6 +7,14 @@
   - name: print result of packstack install
     debug: var=result.stdout_lines
 
+  - name: run migration for neutron service
+    sudo: yes
+    shell: "openstack-db --service {{ item }} --update"
+    when: product.version == 'juno'
+    with_items:
+      - neutron
+      - nova
+
   - name: Reboot after package install
     debug: msg=rebooting
     when: result.rc == 0
