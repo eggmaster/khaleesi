@@ -98,6 +98,13 @@
     - { role: rdopkg/prep, tags: ["rdoupdate"] }
     - { role: rdopkg/postinstall, tags: ["rdoupdate"] }
 
+- name: Update RPMs on tempest node
+  hosts: tempest
+  sudo: yes
+  roles:
+    - { role: rdopkg/prep, tags: ["rdoupdate-tempest"] }
+    - { role: rdopkg/postinstall, tags: ["rdoupdate-tempest"] }
+
 - name: Get Status after reboot
   hosts: controller
   sudo: yes
