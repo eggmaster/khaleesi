@@ -1,4 +1,12 @@
 ---
+- name: prep rdo on tempest
+  hosts: tempest:&RedHat
+  sudo: yes
+  roles:
+    - { role: linux/rhel/rdo }
+  tags:
+    - prep
+
 - name: Prepare system for packstack
   hosts: all:!localhost
   sudo: yes
