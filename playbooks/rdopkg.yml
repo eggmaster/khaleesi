@@ -71,12 +71,19 @@
 
 - include: ../workarounds/workarounds-post-run-packstack.yml tags=workaround
 
-- name: Update RPMs
+- name: Update RPMs on controller
   hosts: controller
   sudo: yes
   roles:
     - { role: rdopkg/prep, tags: ["rdoupdate"] }
     - { role: rdopkg/postinstall, tags: ["rdoupdate"] }
+
+- name: Update RPMs on tempest node
+  hosts: tempest
+  sudo: yes
+  roles:
+    - { role: rdopkg/prep, tags: ["rdoupdate-tempest"] }
+    - { role: rdopkg/postinstall, tags: ["rdoupdate-tempest"] }
 
 - name: Get Status after reboot
   hosts: controller
