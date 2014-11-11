@@ -142,7 +142,7 @@ main() {
     $TAKE_SNAPSHOT && on_exit take_snapshot
 
     echo -e "\nPlaybook: $PLAYBOOK"
-    ansible_playbook $PLAYBOOK $ARGS_FOR_ANSIBLE $RDOPKG_TAGS
+    ansible_playbook $PLAYBOOK $ARGS_FOR_ANSIBLE
 }
 
 main "$@"

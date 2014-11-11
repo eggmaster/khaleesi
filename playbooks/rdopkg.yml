@@ -1,5 +1,5 @@
 ---
-# provison
+# provision
 - include: dump_settings.yml
 - include: provision.yml
 - include: group_by.yml tags=provision
@@ -12,10 +12,10 @@
 - name: Prepare network for Packstack install
   sudo: yes
   hosts:
-    - controller
-    - compute
-    - tempest
-    - networker
+    - controller:!skip_prep
+    - compute:!skip_prep
+    - tempest:!skip_prep
+    - networker:!skip_prep
   tags: prep
   roles:
     -  network-setup
@@ -40,14 +40,14 @@
 - include: ../workarounds/workarounds-prep.yml tags=workaround
 
 - name: Setup packstack dependencies on nodes (rdo)
-  hosts: openstack_nodes:&rdo
+  hosts: openstack_nodes:&rdo:!skip_prep
   sudo: yes
   roles:
       - product/rdo
   tags: prep
 
 - name: Setup packstack dependencies on nodes (rhos)
-  hosts: openstack_nodes:&rhos
+  hosts: openstack_nodes:&rhos:!skip_prep
   sudo: yes
   roles:
       - product/rhos
@@ -62,25 +62,25 @@
 
 # Generate answers
 - name: Setup packstack on Controller
-  hosts: controller
+  hosts: controller:!skip_prep
   sudo: yes
   roles:
       - packstack/generate-answers
   tags: prep
 
 - name: Update RPMs (rdopkg)
-  hosts: controller
+  hosts: controller:!skip_rdoupdate_preinstall
   sudo: yes
   roles:
-    - { role: rdopkg/prep, tags: ["rdoupdate-preinstall"] }
-    - { role: rdopkg/preinstall, tags: ["rdoupdate-preinstall"] }
+    - { role: rdopkg/prep, tags: ["rdoupdate_preinstall"] }
+    - { role: rdopkg/preinstall, tags: ["rdoupdate_preinstall"] }
 
 - include: ../workarounds/workarounds-pre-run-packstack.yml tags=workaround
 
 # packstack_run
 
 - name: Run packstack
-  hosts: controller
+  hosts: controller:!skip_packstack_run
   sudo: yes
   roles:
     - { role: packstack/runner }
@@ -89,7 +89,7 @@
 - include: ../workarounds/workarounds-post-run-packstack.yml tags=workaround
 
 - name: Update RPMs on controller
-  hosts: controller
+  hosts: controller:!skip_rdoupdate
   sudo: yes
   roles:
     - { role: rdopkg/prep, tags: ["rdoupdate"] }
@@ -98,7 +98,7 @@
 - name: Get Status after reboot
   hosts: controller
   sudo: yes
-  tags: openstack_status
+  tags: packstack_run
   roles:
     - { role: openstack/openstack-status }
 
@@ -107,14 +107,14 @@
 
 # tempest
 - name: List ip address of tempest node
-  hosts: tempest
+  hosts: tempest:!skip_tempest_setup
   sudo: yes
   roles:
     - { role: tempest/iptables/node_data }
   tags: tempest_setup
 
 - name: Ensure iptables is open for tempest
-  hosts: all:!localhost:!tempest
+  hosts: all:!localhost:!tempest:!skip_tempest_setup
   sudo: yes
   roles:
     - { role: tempest/iptables }
