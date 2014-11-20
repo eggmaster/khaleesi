@@ -1,8 +1,11 @@
 ---
 # installs packages from the rdopkg update_rpms repo.
   - name: Install packages from rdopkg repo
-    shell:  yum -y install * chdir={{ update_rpms_dir }}
+    script:  install_rpms.sh {{ update_rpms_dir }}
     register: result
 
-  - name: print result of packstack install
+  - name: print result of rdopkg RPM install
     debug: var=result.stdout_lines
+
+  - name: print result of rdopkg RPM install
+    debug: var=result.stderr_lines
