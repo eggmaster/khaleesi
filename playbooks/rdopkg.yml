@@ -4,11 +4,18 @@
 - include: provision.yml
 - include: group_by.yml tags=provision
 
+# prep
+- include: ../workarounds/workarounds-pre-prep.yml tags=workaround
+- include: packstack/setup-ssh-keys.yml tags=prep
+- include: prep.yml
+
 - name: Prepare network for Packstack install
   sudo: yes
   hosts:
     - controller
     - compute
+    - tempest
+    - networker
   tags: prep
   roles:
     -  network-setup
@@ -22,25 +29,35 @@
   roles:
     - { role: packstack/debug }
 
-# prep
-- include: packstack/setup-ssh-keys.yml tags=prep
-- include: prep.yml
+- name: Debug build details
+  hosts: controller
+  sudo: no
+  tags: provision
+  roles:
+    - { role: packstack/debug/build }
 
 # apply pre-packstack workarouds
 - include: ../workarounds/workarounds-prep.yml tags=workaround
 
-- name: Setup packstack on Controller (rdo)
-  hosts: controller:&rdo
+- name: Setup packstack dependencies on nodes (rdo)
+  hosts: openstack_nodes:&rdo
   sudo: yes
   roles:
       - product/rdo
   tags: prep
 
-- name: Setup packstack on Controller (rhos)
-  hosts: controller:&rhos
+- name: Setup packstack dependencies on nodes (rhos)
+  hosts: openstack_nodes:&rhos
   sudo: yes
   roles:
       - product/rhos
+  tags: prep
+
+- name: Setup packstack on Controller
+  hosts: controller
+  sudo: yes
+  roles:
+      - product/packstack
   tags: prep
 
 # Generate answers
@@ -112,10 +129,8 @@
     - { role: selinux_check }
   tags: provision
 
-- name: RHOS SELINUX error check
-  hosts: all:!localhost:!tempest:&rhos
+- name: clean up
+  hosts: all:!localhost:!tempest
   sudo: yes
   roles:
-    - { role: selinux_check/rhos }
-  tags: provision
-
+    - { role: linux/rhsm }
