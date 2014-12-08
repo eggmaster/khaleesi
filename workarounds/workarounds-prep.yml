@@ -23,6 +23,12 @@
           when: workaround_mariadb is defined and workaround_mariadb
        }
 
+- name: Workarounds | specific to fedora 21 distro
+  hosts: Fedora-21:&controller
+  roles:
+     - { role: workarounds/systemd-downgrade }
+         
+
 - name: Workarounds | specific to fedora distro on Compute
   hosts: Fedora:&compute
   roles:

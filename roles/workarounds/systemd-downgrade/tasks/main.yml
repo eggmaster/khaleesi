@@ -1,0 +1,3 @@
+- name: WORKAROUND | 1170645 | Downgrade systemd on Fedora-21
+  shell: yum -y downgrade systemd systemd-libs pcre
+  sudo: yes
