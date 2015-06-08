@@ -30,7 +30,7 @@
             login_tenant_name: admin
             name: "{{ installer.network.name }}"
             provider_network_type: flat
-            provider_physical_network: "{{ installer.network.label }}"
+            provider_physical_network: "{{ installer.network.label | default('myphysnet') }}"
             router_external: yes
             shared: no
             admin_state_up: yes
