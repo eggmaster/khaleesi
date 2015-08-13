@@ -1,4 +1,11 @@
 ---
+- name: FIXME set facts for packstack on ci.centos
+  hosts: all
+  tasks:
+    - name: updating various facts for ci.centos packstack
+      set_fact: provisioner.remote_user="cloud-user"
+      when: installer.type in ['packstack']
+
 - name: Acquire nodes
   hosts: localhost
   gather_facts: no
@@ -63,6 +70,7 @@
         dest: "{{ lookup('env', 'PWD') }}/hosts"
         state: link
         src: "{{ lookup('env', 'PWD') }}/hosts-{{ tmp.node_prefix }}"
+
 
 - name: Update network interfaces on nodes - OpenStack
   hosts: openstack_nodes
