@@ -96,17 +96,17 @@
     - name: debug foo
       debug: var=provisioner.nodes[inventory_hostname_short]
 
-#    - name: Setup networking (interfaces)
-#      template:
-#            src: ../templates/ifcfg-interface.j2
-#            dest: /etc/sysconfig/network-scripts/ifcfg-{{ item.value.label }}
-#            owner: root
-#            group: root
-#            mode: 644
-#      with_dict:
-#          provisioner.nodes[inventory_hostname_short].network.interfaces
-#      register: update_ifcfgs
-#      when: installer.type in ['packstack']
+    - name: Setup networking (interfaces)
+      template:
+            src: ../templates/ifcfg-interface.j2
+            dest: /etc/sysconfig/network-scripts/ifcfg-{{ item.value.label }}
+            owner: root
+            group: root
+            mode: 644
+      with_dict:
+          provisioner.nodes[inventory_hostname_short].network.interfaces
+      register: update_ifcfgs
+      when: installer.type in ['packstack']
 
     #TODO(tkammer): write this better by fixing the upstream module to provide the private IP properly
     # - name: update IP address of eth1 interface
