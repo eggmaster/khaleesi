@@ -124,3 +124,11 @@
       when: installer.type in ['packstack']
 
 
+- name: miscellaneous network config
+  hosts: openstack_nodes
+  gather_facts: yes
+  max_fail_percentage: 0
+  sudo: yes
+  tasks:
+    - name: set ip_resolve=4 for centosci hosts
+      lineinfile: dest=/etc/yum.conf line="ip_resolve=4"
