@@ -13,7 +13,7 @@
           - rdo-release*
           - epel-release
       - name: Install release tool on machines
-        command: "yum localinstall -y {{ product.rpmrepo[ansible_distribution] }}"
+        command: "yum install -y {{ product.rpmrepo[ansible_distribution] }}"
 
 - name: Setup epel repos
   hosts: all:!localhost:&RedHat:&CentOS
