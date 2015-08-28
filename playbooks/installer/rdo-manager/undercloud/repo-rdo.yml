@@ -68,6 +68,9 @@
   vars:
     - ansible_ssh_user: root
   tasks:
+    - name: yum clean all
+      command: yum clean all
+
     - name: repolist
       command: yum -d 7 repolist
 
