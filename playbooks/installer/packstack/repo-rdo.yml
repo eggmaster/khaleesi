@@ -12,8 +12,11 @@
         with_items:
           - rdo-release*
           - epel-release
-      - name: Install release tool on machines
-        command: "yum install -y {{ product.rpmrepo[ansible_distribution] }}"
+#      - name: Install release tool on machines
+#        command: "yum install -y {{ product.rpmrepo[ansible_distribution] }}"
+      - name: install cbs repo defn
+        template: src=templates/cbs-repo.j2 dest=/etc/yum.repos.d/cbs.repo mode=0644
+
 
 - name: Setup epel repos
   hosts: all:!localhost:&RedHat:&CentOS

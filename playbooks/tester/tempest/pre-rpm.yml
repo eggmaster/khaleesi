@@ -7,11 +7,11 @@
     # Normally tempest would be already available from the installer repos
     # but that's not the case yet (master pkg now needs kilo rdo for deps)
     - command: yum localinstall -y https://rdo.fedorapeople.org/openstack-kilo/rdo-release-kilo.rpm
-      when: tester.rpm.release == 'master'
+      when: tester.rpm.release == 'master' and provisioner.type != 'centosci'
     # and atm also custom delorean repo (until it gets into trunk.rdo)
     - template: dest=/etc/yum.repos.d/tempest.repo src=../templates/tempest-master.repo owner=root group=root mode=0644
       register: tempest_repo
-      when: tester.rpm.release == 'master'
+      when: tester.rpm.release == 'master' and provisioner.type != 'centosci'
 
     - command: yum clean all
       when: tempest_repo|changed
