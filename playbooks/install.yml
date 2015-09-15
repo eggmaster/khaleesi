@@ -1,6 +1,6 @@
 ---
 - name: Set selinux state
-  hosts: openstack_nodes
+  hosts: all
   sudo: yes
   tasks:
     - selinux: policy=targeted state={{ distro.config.selinux|default('enforcing') }}
