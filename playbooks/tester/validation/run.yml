@@ -1,0 +1,6 @@
+---
+- name: RHEL RDO prep
+  hosts: controller
+  sudo: yes
+  roles:
+    - { role: validate_openstack }
