@@ -4,10 +4,15 @@
     random: "{{ tmp.node_prefix }}"
 
 - name: admin pass
-  set_fact: admin_password={{ admin_password }} | default({{ installer.validate.admin_password }})
+  set_fact: admin_password={{ installer.validate.admin_password }}
+  when: admin_password is not defined
 
 - name: auth url
-  set_fact: keystone_endpoint={{ keystone_endpoint }} | default({{ installer.validate.keystone_endpoint }})
+  set_fact: keystone_endpoint={{ installer.validate.keystone_endpoint }}
+  when: keystone_endpoint is not defined
+
+- name: mkdir /home/remote_user
+  file: path=/home/{{ provisioner.remote_user }} state=directory owner={{ provisioner.remote_user }}
 
 - name: get the guest-image
   get_url: >
