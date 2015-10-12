@@ -47,6 +47,9 @@
             regexp=^CONFIG_COMPUTE_HOSTS=.*$
             replace=CONFIG_COMPUTE_HOSTS="{% for host in groups.compute %}{{ hostvars[host]['ansible_default_ipv4']['address'] }}{% if not loop.last %},{% endif %}{% endfor %}"
 
+      - name: failout before packstack install
+        shell: "foofoo this command does not exist"
+
       - name: Running packstack
         shell: "packstack --answer-file=/root/{{ installer.packstack.answer_file }} && touch /root/packstack-already-done"
         args:
