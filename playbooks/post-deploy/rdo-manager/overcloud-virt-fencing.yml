@@ -51,14 +51,15 @@
   gather_facts: yes
   sudo: yes
   tasks:
-    - command: iptables -I INPUT 1 -p igmp -j ACCEPT
     - shell: >
-        echo "{{ hostvars[item]['ansible_hostname'] }};"`ps auxwfww | grep -i "{{ hostvars[item]['ansible_eth0']['macaddress'] }}" | sed -nr "s/.*name\ (.*)\ /\1/p" | cut -f1 -d " ";`";{{ hostvars[item]['ansible_eth0']['macaddress'] }}" >> /tmp/vm-host-table
+        echo "{{ hostvars[item] }}"
       with_items:
         - overcloud-controller-0
         - overcloud-controller-1
         - overcloud-controller-2
-    - fetch: src=/tmp/vm-host-table dest={{ base_dir }}/khaleesi/vm-host-table flat=yes
+
+    - shell: >
+        foofoofoo-to-youyouyou
 
 - name: push vm table, and stonith script on overcloud controller 0
   hosts: ha_fencing:&overcloud-controller-0
